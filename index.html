@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#f6f7f5" />
+    <meta
+      name="description"
+      content="A responsive team operations dashboard with live directory and task data."
+    />
+    <title>Overview | Fieldnotes</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar" aria-label="Main sidebar">
+        <a class="brand" href="#overview" aria-label="Fieldnotes home">
+          <span class="brand-mark" aria-hidden="true"><i data-lucide="panels-top-left"></i></span>
+          <span>fieldnotes<span class="brand-period">.</span></span>
+        </a>
+
+        <div class="workspace-switcher">
+          <span class="workspace-avatar" aria-hidden="true">N</span>
+          <span class="workspace-copy"><strong>Northstar Studio</strong><small>Free workspace</small></span>
+          <i data-lucide="chevrons-up-down" aria-hidden="true"></i>
+        </div>
+
+        <nav class="primary-nav" aria-label="Primary navigation">
+          <p class="nav-label">Workspace</p>
+          <a class="nav-link is-active" href="#overview" aria-current="page"><i data-lucide="layout-dashboard" aria-hidden="true"></i><span>Overview</span></a>
+          <a class="nav-link" href="#team"><i data-lucide="users-round" aria-hidden="true"></i><span>Team directory</span><span class="nav-count" id="nav-team-count">—</span></a>
+          <a class="nav-link" href="#tasks"><i data-lucide="list-checks" aria-hidden="true"></i><span>Task board</span></a>
+          <p class="nav-label nav-label-spaced">Manage</p>
+          <a class="nav-link" href="#activity"><i data-lucide="chart-no-axes-column-increasing" aria-hidden="true"></i><span>Reports</span></a>
+          <a class="nav-link" href="#settings"><i data-lucide="settings-2" aria-hidden="true"></i><span>Settings</span></a>
+        </nav>
+
+        <div class="sidebar-bottom">
+          <div class="upgrade-note">
+            <span class="upgrade-icon" aria-hidden="true"><i data-lucide="sparkles"></i></span>
+            <strong>Make room for good work.</strong>
+            <p>Your team is just getting started. Keep the momentum going.</p>
+            <a href="#team">Explore your team <i data-lucide="arrow-up-right" aria-hidden="true"></i></a>
+          </div>
+          <button class="profile-button" type="button" aria-label="Account menu for Alex Morgan">
+            <span class="profile-avatar" aria-hidden="true">AM</span>
+            <span class="profile-copy"><strong>Alex Morgan</strong><small>Workspace admin</small></span>
+            <i data-lucide="ellipsis" aria-hidden="true"></i>
+          </button>
+        </div>
+      </aside>
+
+      <main class="main-content" id="overview">
+        <header class="topbar">
+          <div class="breadcrumbs"><span>Workspace</span><i data-lucide="chevron-right" aria-hidden="true"></i><strong>Overview</strong></div>
+          <div class="topbar-actions">
+            <span class="date-label" id="today-label"></span>
+            <button class="icon-button notification-button" type="button" aria-label="Notifications, none unread"><i data-lucide="bell" aria-hidden="true"></i><span aria-hidden="true"></span></button>
+            <button class="mobile-profile" type="button" aria-label="AM, account menu for Alex Morgan">AM</button>
+          </div>
+        </header>
+
+        <div class="page-content">
+          <section class="page-intro" aria-labelledby="page-title">
+            <div>
+              <p class="eyebrow">YOUR TEAM, AT A GLANCE</p>
+              <h1 id="page-title">Good morning, Alex <span aria-hidden="true">✳</span></h1>
+              <p class="intro-copy">A little clarity for everything your team is moving forward.</p>
+            </div>
+            <a class="primary-button" href="#team"><i data-lucide="user-round-plus" aria-hidden="true"></i> Meet the team</a>
+          </section>
+
+          <div id="load-error" class="error-banner" role="alert" hidden>
+            <i data-lucide="circle-alert" aria-hidden="true"></i>
+            <span>We couldn't load the workspace data.</span>
+            <button id="retry-button" class="text-button" type="button">Try again</button>
+          </div>
+
+          <section class="metrics-grid" id="metrics" aria-label="Workspace summary" aria-live="polite" aria-busy="true">
+            <article class="metric-card metric-people">
+              <div class="metric-top"><span class="metric-icon"><i data-lucide="users-round" aria-hidden="true"></i></span><span class="metric-period">THIS WORKSPACE</span></div>
+              <p class="metric-label">People in your orbit</p><p class="metric-value" id="member-total">—</p>
+              <p class="metric-footnote"><span class="status-dot"></span> Everyone's on the list</p>
+            </article>
+            <article class="metric-card metric-open">
+              <div class="metric-top"><span class="metric-icon"><i data-lucide="list-todo" aria-hidden="true"></i></span><span class="metric-period">ACROSS THE TEAM</span></div>
+              <p class="metric-label">Still in motion</p><p class="metric-value" id="open-total">—</p>
+              <p class="metric-footnote"><span class="metric-footnote-accent" id="complete-total">— done</span> tasks wrapped up</p>
+            </article>
+            <article class="metric-card metric-completion">
+              <div class="metric-top"><span class="metric-icon"><i data-lucide="circle-check-big" aria-hidden="true"></i></span><span class="metric-period">TASK COMPLETION</span></div>
+              <p class="metric-label">Things getting done</p><p class="metric-value"><span id="completion-rate">—</span><span class="metric-unit">%</span></p>
+              <div class="metric-progress" aria-hidden="true"><span id="completion-bar"></span></div>
+            </article>
+          </section>
+
+          <section class="dashboard-grid" aria-label="Team activity">
+            <article class="panel activity-panel" id="activity">
+              <div class="panel-heading">
+                <div><p class="section-kicker">THE BIG PICTURE</p><h2>Work in motion</h2></div>
+                <span class="panel-icon" aria-hidden="true"><i data-lucide="chart-no-axes-combined"></i></span>
+              </div>
+              <p class="panel-description">A snapshot of what your team has on its plate.</p>
+              <div id="completion-breakdown" class="completion-breakdown" aria-live="polite" aria-busy="true">
+                <div class="breakdown-row"><span class="breakdown-label">Completed</span><span class="breakdown-track"><span class="breakdown-fill fill-complete" id="completed-fill"></span></span><strong id="completed-count">—</strong></div>
+                <div class="breakdown-row"><span class="breakdown-label">In progress</span><span class="breakdown-track"><span class="breakdown-fill fill-progress" id="progress-fill"></span></span><strong id="progress-count">—</strong></div>
+                <div class="breakdown-row"><span class="breakdown-label">To do</span><span class="breakdown-track"><span class="breakdown-fill fill-todo" id="todo-fill"></span></span><strong id="todo-count">—</strong></div>
+              </div>
+              <div class="panel-footnote"><span class="legend-dot"></span><span id="task-total-caption">Loading team tasks</span><a href="#tasks">View task list <i data-lucide="arrow-right" aria-hidden="true"></i></a></div>
+            </article>
+
+            <article class="panel pulse-panel" id="tasks">
+              <div class="panel-heading">
+                <div><p class="section-kicker">A GOOD PLACE TO START</p><h2>Needs a nudge</h2></div>
+                <span class="pulse-count" id="nudge-count">—</span>
+              </div>
+              <p class="panel-description">A few open items to bring into focus.</p>
+              <ul class="nudge-list" id="nudge-list" aria-live="polite" aria-busy="true">
+                <li class="nudge-placeholder">Gathering your team's tasks…</li>
+              </ul>
+              <a class="panel-link" href="#team">See who's doing what <i data-lucide="arrow-up-right" aria-hidden="true"></i></a>
+            </article>
+          </section>
+
+          <section class="panel directory-panel" id="team" aria-labelledby="directory-title">
+            <div class="directory-heading">
+              <div><p class="section-kicker">GOOD PEOPLE, GOOD WORK</p><h2 id="directory-title">Your team</h2><p class="panel-description">A little closer to the people behind the progress.</p></div>
+              <div class="directory-tools">
+                <label class="search-field"><i data-lucide="search" aria-hidden="true"></i><span class="sr-only">Search team members</span><input id="team-search" type="search" placeholder="Find someone…" autocomplete="off" /></label>
+                <label class="select-field"><span class="sr-only">Filter team by task completion</span><select id="team-filter"><option value="all">Everyone</option><option value="half-done">At least half done</option><option value="under-half">Under half done</option></select><i data-lucide="chevron-down" aria-hidden="true"></i></label>
+              </div>
+            </div>
+            <div class="table-scroll">
+              <table>
+                <thead><tr><th scope="col">Person</th><th scope="col">Company</th><th scope="col">Location</th><th scope="col">Task progress</th><th scope="col"><span class="sr-only">Status</span></th></tr></thead>
+                <tbody id="team-table-body"><tr><td class="table-loading" colspan="5">Getting the team together…</td></tr></tbody>
+              </table>
+            </div>
+            <div class="directory-footer"><span id="directory-count">Loading directory…</span><span class="data-source">Live sample data <span aria-hidden="true">·</span> JSONPlaceholder</span></div>
+          </section>
+
+          <footer class="page-footer"><span>Made for good work.</span><span>Fieldnotes <span aria-hidden="true">©</span> 2026</span></footer>
+        </div>
+      </main>
+    </div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
